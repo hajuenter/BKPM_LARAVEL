@@ -18,9 +18,14 @@ Route::get('/foo/{id}', function ($id) {
     return 'User ' . $id;
 });
 
+//Route with parameter filled
+Route::get('/fooid/{id?}', function ($id = 23) {
+    return 'User ' . $id;
+});
+
 //Route with parameter checking
-Route::get('/halo/{id?}', function ($ya = 'Parameter kosong') {
-    return $ya;
+Route::get('/halo/{id?}', function ($id = 'Parameter kosong') {
+    return $id;
 });
 
 //Route call view from controller
@@ -61,6 +66,13 @@ Route::get('/search/{search}', function ($search) {
 Route::get('/profile', [UserController::class, 'showProfile'])->name('profileya');
 Route::get('/generate-url', [UserController::class, 'generateProfileUrl']);
 Route::get('/redirect-profile', [UserController::class, 'redirectToProfile']);
+Route::get('/params/{id?}', function ($id) {
+    return "ID yang diterima: " . $id;
+})->name('params_id');
+Route::get('/test-url', function () {
+    $url = route('params_id', ["id" => 5]);
+    dd($url);
+});
 
 //Check route
 Route::get('/profileCek', [UserController::class, 'showProfile'])
@@ -98,7 +110,7 @@ Route::prefix('admin')->group(function () {
 });
 
 //Route name previx
-Route::name('previx.')->prefix('cobalagi')->group(function () {
+Route::name('pre')->prefix('cobalagi')->group(function () {
     Route::get('/dashboard', function () {
         return "Ini halaman dashboard previx name.";
     })->name('pv.dashboard');
@@ -107,6 +119,14 @@ Route::name('previx.')->prefix('cobalagi')->group(function () {
         return "Ini halaman daftar pengguna previx name.";
     })->name('pv.user');
 });
+
+//Method Route
+// Route::get($uri, $callback);
+// Route::post($uri, $callback);
+// Route::put($uri, $callback);
+// Route::patch($uri, $callback);
+// Route::delete($uri, $callback);
+// Route::options($uri, $callback);
 
 //Route group with controller
 // Route::controller(RegisterController::class)->group(function () {
