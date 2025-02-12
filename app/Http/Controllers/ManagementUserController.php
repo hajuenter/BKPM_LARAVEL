@@ -11,6 +11,8 @@ class ManagementUserController extends Controller
         $name = "ACH. BAHRUL MA'ARIP";
         $lesson = ["Mathematics", "Physics", "Biology"];
         return view('home', compact('name', 'lesson'));
+
+        // return view('butterfly');
     }
 
     public function create()
@@ -25,21 +27,21 @@ class ManagementUserController extends Controller
 
     public function show($id)
     {
-        return "Ini halaman show" . $id;
+        return "Ini halaman show " . $id;
     }
 
     public function edit($id)
     {
-        return "Ini halaman edit" . $id;
+        return "Ini halaman edit " . $id;
     }
 
     public function update(Request $request, $id)
     {
-        return "Ini halaman update" . $id;
+        return "Ini halaman update " . $id;
     }
 
     public function destroy($id)
     {
-        return "Ini halaman destroy" . $id;
+        return "Ini halaman destroy " . $id;
     }
 }

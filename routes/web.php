@@ -4,7 +4,6 @@ use App\Http\Controllers\ManagementUserController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
-//Acara 3
 //Route with name
 Route::get('/', function () {
     return view('welcome');
@@ -64,7 +63,6 @@ Route::get('/search/{search}', function ($search) {
     return $search;
 })->where('search', '.*');
 
-//Acara 4
 //Generate URL ke Route Bernama
 Route::get('/profile', [UserController::class, 'showProfile'])->name('profileya');
 Route::get('/generate-url', [UserController::class, 'generateProfileUrl']);
@@ -137,9 +135,12 @@ Route::name('pre')->prefix('cobalagi')->group(function () {
 //     Route::post('/register', 'register');
 // });
 
-//Acara 5
 Route::resource('mguser', ManagementUserController::class);
 // Route::get('/home', function () {
 //     return view('home');
 // });
 Route::get('/home', [ManagementUserController::class, 'index']);
+
+Route::group(['namespace' => 'App\Http\Controllers\Frontend'], function () {
+    Route::resource('home', 'HomeController');
+});
