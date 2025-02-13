@@ -1,8 +1,11 @@
 <?php
 
-use App\Http\Controllers\ManagementUserController;
-use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\ManagementUserController;
+use App\Http\Controllers\Backend\ProductController;
+use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Frontend\HomeController;
 
 //Route with name
 Route::get('/', function () {
@@ -139,8 +142,15 @@ Route::resource('mguser', ManagementUserController::class);
 // Route::get('/home', function () {
 //     return view('home');
 // });
-Route::get('/home', [ManagementUserController::class, 'index']);
+Route::get('/mghome', [ManagementUserController::class, 'index']);
 
+//frontend route
 Route::group(['namespace' => 'App\Http\Controllers\Frontend'], function () {
-    Route::resource('home', 'HomeController');
+    Route::resource('home', HomeController::class);
+});
+
+//backend route
+Route::group(['namespace' => 'App\Http\Controllers\Backend'], function () {
+    Route::resource('dashboard', DashboardController::class);
+    Route::resource('product', ProductController::class);
 });
