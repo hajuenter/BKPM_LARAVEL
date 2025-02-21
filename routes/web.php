@@ -139,6 +139,15 @@ Route::name('pre')->prefix('cobalagi')->group(function () {
 // });
 
 Route::resource('mguser', ManagementUserController::class);
+
+// Route::get('mguser', [ManagementUserController::class, 'index']);
+// Route::get('mguser/create', [ManagementUserController::class, 'create']);
+// Route::post('mguser', [ManagementUserController::class, 'store']);
+// Route::get('mguser/{id}', [ManagementUserController::class, 'show']);
+// Route::get('mguser/{id}/edit', [ManagementUserController::class, 'edit']);
+// Route::put('mguser/{id}', [ManagementUserController::class, 'update']);
+// Route::delete('mguser/{id}', [ManagementUserController::class, 'destroy']);
+
 // Route::get('/home', function () {
 //     return view('home');
 // });
@@ -154,3 +163,5 @@ Route::group(['namespace' => 'App\Http\Controllers\Backend'], function () {
     Route::resource('dashboard', DashboardController::class);
     Route::resource('product', ProductController::class);
 });
+
+

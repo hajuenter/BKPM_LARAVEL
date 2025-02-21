@@ -12,7 +12,7 @@ class ManagementUserController extends Controller
         $lesson = ["Mathematics", "Physics", "Biology"];
         return view('home', compact('name', 'lesson'));
 
-        // return view('butterfly');
+        // return "Ini halaman index";
     }
 
     public function create()
