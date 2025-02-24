@@ -10,7 +10,7 @@ class ManagementUserController extends Controller
     {
         $name = "ACH. BAHRUL MA'ARIP";
         $lesson = ["Mathematics", "Physics", "Biology"];
-        return view('home', compact('name', 'lesson'));
+        return view('homeee', compact('name', 'lesson'));
 
         // return "Ini halaman index";
     }

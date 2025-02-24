@@ -1,11 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\ManagementUserController;
 use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\DashboardController;
-use App\Http\Controllers\Frontend\HomeController;
 
 //Route with name
 Route::get('/', function () {
@@ -155,7 +156,7 @@ Route::get('/mghome', [ManagementUserController::class, 'index']);
 
 //frontend route
 Route::group(['namespace' => 'App\Http\Controllers\Frontend'], function () {
-    Route::resource('home', HomeController::class);
+    Route::resource('homeee', HomeController::class);
 });
 
 //backend route
@@ -163,3 +164,8 @@ Route::group(['namespace' => 'App\Http\Controllers\Backend'], function () {
     Route::resource('dashboard', DashboardController::class);
     Route::resource('product', ProductController::class);
 });
+
+//acara 11
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
