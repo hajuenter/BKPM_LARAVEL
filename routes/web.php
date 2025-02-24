@@ -163,5 +163,3 @@ Route::group(['namespace' => 'App\Http\Controllers\Backend'], function () {
     Route::resource('dashboard', DashboardController::class);
     Route::resource('product', ProductController::class);
 });
-
-
