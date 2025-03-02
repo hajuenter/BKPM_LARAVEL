@@ -5,8 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\ManagementUserController;
-use App\Http\Controllers\Backend\ProductController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\PendidikanController;
+use App\Http\Controllers\Backend\PengalamanKerjaController;
 
 //Route with name
 Route::get('/', function () {
@@ -74,10 +75,10 @@ Route::get('/redirect-profile', [UserController::class, 'redirectToProfile']);
 Route::get('/params/{id?}', function ($id) {
     return "ID yang diterima: " . $id;
 })->name('params_id');
-Route::get('/test-url', function () {
-    $url = route('params_id', ["id" => 5]);
-    dd($url);
-});
+// Route::get('/test-url', function () {
+//     $url = route('params_id', ["id" => 5]);
+//     dd($url);
+// });
 
 //Check route
 Route::get('/profileCek', [UserController::class, 'showProfile'])
@@ -160,12 +161,26 @@ Route::group(['namespace' => 'App\Http\Controllers\Frontend'], function () {
 });
 
 //backend route
-Route::group(['namespace' => 'App\Http\Controllers\Backend'], function () {
-    Route::resource('dashboard', DashboardController::class);
-    Route::resource('product', ProductController::class);
+Route::prefix('backend')->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'showDashboard'])->name('dashboard.backend');
+
+    //pendidikan
+    Route::get('pendidikan', [PendidikanController::class, 'showPendidikan'])->name('pendidikan.backend');
+    Route::get('pendidikan/add', [PendidikanController::class, 'showPendidikanAdd'])->name('pendidikan.backend.add');
+    Route::post('pendidikan/store', [PendidikanController::class, 'storePendidikan'])->name('pendidikan.store');
+    Route::get('pendidikan/edit/{id}', [PendidikanController::class, 'editPendidikan'])->name('edit.pendidikan');
+    Route::put('pendidikan/update/{id}', [PendidikanController::class, 'updatePendidikan'])->name('update.pendidikan');
+    Route::delete('pendidikan/delete/{id}', [PendidikanController::class, 'deletePendidikan'])->name('delete.pendidikan');
+
+    //pengalaman kerja
+    Route::get('pengalamankerja', [PengalamanKerjaController::class, 'showPengalamanKerja'])->name('pengalamankerja.backend');
+    Route::get('pengalamankerja/add', [PengalamanKerjaController::class, 'showPengalamanKerjaAdd'])->name('pengalamankerja.backend.add');
+    Route::post('pengalamankerja/store', [PengalamanKerjaController::class, 'storePengalamanKerja'])->name('pengalamankerja.store');
+    Route::get('pengalamankerja/edit/{id}', [PengalamanKerjaController::class, 'editPengalamanKerja'])->name('pengalamankerja.edit');
+    Route::put('pengalamankerja/update/{id}', [PengalamanKerjaController::class, 'updatePengalamanKerja'])->name('pengalamankerja.update');
+    Route::delete('pengalamankerja/delete/{id}', [PengalamanKerjaController::class, 'deletePengalamanKerja'])->name('pengalamankerja.delete');
 });
 
-//acara 11
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
