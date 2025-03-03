@@ -179,6 +179,11 @@ Route::prefix('backend')->group(function () {
     Route::get('pengalamankerja/edit/{id}', [PengalamanKerjaController::class, 'editPengalamanKerja'])->name('pengalamankerja.edit');
     Route::put('pengalamankerja/update/{id}', [PengalamanKerjaController::class, 'updatePengalamanKerja'])->name('pengalamankerja.update');
     Route::delete('pengalamankerja/delete/{id}', [PengalamanKerjaController::class, 'deletePengalamanKerja'])->name('pengalamankerja.delete');
+
+    //bisa juga menggunakan resource
+    // php artisan make:controller nama --resource
+    // Route::resource(PendidikanController::class);
+    // Route::resource(PengalamanKerjaController::class);
 });
 
 Auth::routes();
