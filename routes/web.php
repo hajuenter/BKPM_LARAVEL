@@ -8,6 +8,10 @@ use App\Http\Controllers\ManagementUserController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\PendidikanController;
 use App\Http\Controllers\Backend\PengalamanKerjaController;
+use App\Http\Controllers\CobaController;
+use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\SessionController;
+use App\Http\Controllers\UploadController;
 
 //Route with name
 Route::get('/', function () {
@@ -150,9 +154,6 @@ Route::resource('mguser', ManagementUserController::class);
 // Route::put('mguser/{id}', [ManagementUserController::class, 'update']);
 // Route::delete('mguser/{id}', [ManagementUserController::class, 'destroy']);
 
-// Route::get('/home', function () {
-//     return view('home');
-// });
 Route::get('/mghome', [ManagementUserController::class, 'index']);
 
 //frontend route
@@ -189,3 +190,28 @@ Route::prefix('backend')->group(function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//session
+Route::get('/session/create', [SessionController::class, 'create']);
+Route::get('/session/show', [SessionController::class, 'show']);
+Route::get('/session/delete', [SessionController::class, 'delete']);
+
+//get data from uri
+Route::get('/pegawai/{nama}', [PegawaiController::class, 'index']);
+
+//form and validation form
+Route::get('/formulir', [PegawaiController::class, 'formulir']);
+Route::post('/formulir/proses', [PegawaiController::class, 'proses'])->name('proses.formulir');
+
+//show error
+Route::get('/cobaerror/{nama}', [CobaController::class, 'index']);
+
+//acara 19
+Route::get('/upload', [UploadController::class, 'upload'])->name('upload');
+Route::post('/upload/proses', [UploadController::class, 'proses_upload'])->name('upload.proses');
+
+//resize
+Route::get('/upload/resize', [UploadController::class, 'viewResize'])->name('upload.resize');
+Route::post('/upload/resize/proses', [UploadController::class, 'proses_upload_resize'])->name('upload.proses.resize');
+
+
