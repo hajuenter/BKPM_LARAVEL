@@ -76,4 +76,67 @@ class UploadController extends Controller
 
         return redirect(route('upload.resize'))->with('success', 'Data berhasil ditambahkan!');
     }
+
+    public function dropzone()
+    {
+        return view('dropzone');
+    }
+
+    public function dropzone_store(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $filename = time() . '_' . $file->getClientOriginalName();
+
+            // Tentukan path penyimpanan
+            $destinationPath = public_path('img/dropzone');
+
+            // Buat folder jika belum ada
+            if (!File::exists($destinationPath)) {
+                File::makeDirectory($destinationPath, 0777, true, true);
+            }
+
+            // Pindahkan file ke folder tujuan
+            $file->move($destinationPath, $filename);
+
+            return response()->json([
+                'success' => 'File berhasil diupload!',
+                'file_name' => 'img/dropzone/' . $filename
+            ]);
+        }
+
+        return response()->json(['error' => 'Tidak ada file yang diupload!'], 400);
+    }
+
+    public function dropzonePdf()
+    {
+        return view('dropzone_pdf');
+    }
+
+    // Menyimpan file PDF yang diunggah
+    public function dropzonePdfStore(Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $filename = time() . '_' . $file->getClientOriginalName();
+
+            // Tentukan path penyimpanan
+            $destinationPath = public_path('pdf/dropzone');
+
+            // Buat folder jika belum ada
+            if (!File::exists($destinationPath)) {
+                File::makeDirectory($destinationPath, 0777, true, true);
+            }
+
+            // Pindahkan file ke folder tujuan
+            $file->move($destinationPath, $filename);
+
+            return response()->json([
+                'success' => 'File berhasil diunggah!',
+                'file_name' => 'pdf/dropzone/' . $filename
+            ]);
+        }
+
+        return response()->json(['error' => 'Tidak ada file yang diunggah!'], 400);
+    }
 }
