@@ -158,10 +158,12 @@ Route::get('/mghome', [ManagementUserController::class, 'index']);
 
 //frontend route template butterfly
 //url http://127.0.0.1:8000/homeee
+//acara 7
 Route::group(['namespace' => 'App\Http\Controllers\Frontend'], function () {
     Route::resource('homeee', HomeController::class);
 });
 
+//acara 8 - 16
 //backend route
 //url http://127.0.0.1:8000/backend/dashboard
 Route::prefix('backend')->group(function () {

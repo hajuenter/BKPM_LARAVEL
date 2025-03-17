@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
-use App\Models\PengalamanKerja;
 use Illuminate\Http\Request;
+use App\Models\PengalamanKerja;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class PengalamanKerjaController extends Controller
 {
     public function showPengalamanKerja()
     {
-        $dataPengalamanKerja = PengalamanKerja::all();
+        $dataPengalamanKerja = DB::table('pengalaman_kerja')->get();
         return view('backend.pengalamankerja.pengalamankerja', compact('dataPengalamanKerja'));
     }
 
@@ -40,11 +41,13 @@ class PengalamanKerjaController extends Controller
             'tahun_keluar.gte'      => 'Tahun keluar tidak boleh lebih kecil dari tahun masuk.',
         ]);
 
-        PengalamanKerja::create([
+        DB::table('pengalaman_kerja')->insert([
             'nama'         => $request->nama,
             'jabatan'      => $request->jabatan,
             'tahun_masuk'  => $request->tahun_masuk,
             'tahun_keluar' => $request->tahun_keluar,
+            'created_at'   => now(),
+            'updated_at'   => now(),
         ]);
 
         return redirect()->route('pengalamankerja.backend')->with('success', 'Data pengalaman kerja berhasil disimpan!');
@@ -77,13 +80,22 @@ class PengalamanKerjaController extends Controller
             'tahun_keluar.gte'      => 'Tahun keluar tidak boleh lebih kecil dari tahun masuk.',
         ]);
 
-        $pengalamanKerja = PengalamanKerja::findOrFail($id);
-        $pengalamanKerja->update([
-            'nama'         => $request->nama,
-            'jabatan'      => $request->jabatan,
-            'tahun_masuk'  => $request->tahun_masuk,
-            'tahun_keluar' => $request->tahun_keluar,
-        ]);
+        $pengalamanKerja = DB::table('pengalaman_kerja')->where('id', $id)->first();
+
+        if ($pengalamanKerja) {
+            DB::table('pengalaman_kerja')
+                ->where('id', $id)
+                ->update([
+                    'nama'         => $request->nama,
+                    'jabatan'      => $request->jabatan,
+                    'tahun_masuk'  => $request->tahun_masuk,
+                    'tahun_keluar' => $request->tahun_keluar,
+                    'updated_at'   => now(),
+                ]);
+        } else {
+            abort(404, 'Data tidak ditemukan');
+        }
+
 
         return redirect()->route('pengalamankerja.backend')->with('success', 'Data pengalaman kerja berhasil diperbarui!');
     }
@@ -91,8 +103,13 @@ class PengalamanKerjaController extends Controller
     // Hapus pengalaman kerja
     public function deletePengalamanKerja($id)
     {
-        $pengalamanKerja = PengalamanKerja::findOrFail($id);
-        $pengalamanKerja->delete();
+        $pengalamanKerja = DB::table('pengalaman_kerja')->where('id', $id)->first();
+
+        if ($pengalamanKerja) {
+            DB::table('pengalaman_kerja')->where('id', $id)->delete();
+        } else {
+            abort(404, 'Data tidak ditemukan');
+        }
 
         return redirect()->route('pengalamankerja.backend')->with('success', 'Data pengalaman kerja berhasil dihapus!');
     }

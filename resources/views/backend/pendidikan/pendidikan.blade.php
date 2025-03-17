@@ -56,7 +56,21 @@
                                                         <tr>
                                                             <th>{{ $value->id }}</th>
                                                             <td>{{ $value->nama }}</td>
-                                                            <td>{{ $value->tingkatan }}</td>
+                                                            @php
+                                                                $tingkatanList = [
+                                                                    1 => 'TK',
+                                                                    2 => 'SD',
+                                                                    3 => 'SMP',
+                                                                    4 => 'SMA/SMK',
+                                                                    5 => 'D3',
+                                                                    6 => 'D4/S1',
+                                                                    7 => 'S2',
+                                                                    8 => 'S3',
+                                                                ];
+                                                            @endphp
+                                                            <td>{{ $tingkatanList[$value->tingkatan] ?? 'Tidak Diketahui' }}
+                                                            </td>
+
                                                             <td>{{ $value->tahun_masuk }}</td>
                                                             <td>{{ $value->tahun_keluar }}</td>
                                                             <td class="text-center">
